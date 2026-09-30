@@ -2,7 +2,7 @@
 
 Portfolio website for Morakins FiveM Hub. Plain HTML, CSS and JavaScript. No build step and no dependencies.
 
-Live site: `https://YOUR-USERNAME.github.io/morakins-fivem-hub/`
+Live site: `https://morakinselijah-ux.github.io/Morakins-fiveM-hub/`
 
 ## Structure
 
