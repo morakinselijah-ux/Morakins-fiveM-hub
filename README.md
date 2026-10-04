@@ -15,6 +15,7 @@ Home, Portfolio, and one page per category: Vehicles, Liveries, Chains, Peds, Cl
 | `data.js` | All portfolio projects and chain images |
 | `app.js` | Routing, filters, modals, video player, assistant, form |
 | `styles.css` | Styling |
+| `check.html` | Open /check.html on the live site to test that all images are uploaded |
 | `assets/logo` | Morakins logo |
 | `assets/img/<category>` | Optimized images, one folder per category |
 | `assets/video` | Compressed MP4 videos |

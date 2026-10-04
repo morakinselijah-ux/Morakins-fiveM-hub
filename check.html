@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Upload check | Morakins FiveM Hub</title>
+<style>body{background:#0a0b0d;color:#f3f1ec;font:16px/1.6 system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px}h1{font-size:28px}.box{padding:18px 20px;border-radius:12px;border:1px solid #333;margin:18px 0}.ok{border-color:#3a9d5d;background:rgba(58,157,93,.12)}.warn{border-color:#d8a94b;background:rgba(216,169,75,.12)}.bad{border-color:#c8342f;background:rgba(200,52,47,.12)}code{background:#1a1d21;padding:2px 6px;border-radius:6px}li{margin:3px 0}a{color:#d8a94b}</style></head><body>
+<h1>Upload check</h1><p>This page tests whether every image and video the website needs is on your GitHub site.</p><div id="r" class="box">Checking…</div><div id="d"></div><p><a href="./">Back to the website</a></p>
+<script src="data.js"></script><script src="config.js"></script><script>
+const paths=new Set([SITE_CONFIG.logo,SITE_CONFIG.heroImage]);
+PORTFOLIO.forEach(p=>{p.gallery.forEach(g=>paths.add(g));(p.videos||[]).forEach(v=>{paths.add(v.src);paths.add(v.poster)})});CHAINS.forEach(c=>paths.add(c.img));
+const exists=u=>fetch(u+'?c='+Date.now(),{method:'HEAD',cache:'no-store'}).then(r=>r.ok).catch(()=>false);
+const alts=p=>{const b=p.split('/').pop();return[b,'assets/'+b,'assets/img/'+b,'assets/video/'+b,'assets/logo/'+b,'img/'+b,'images/'+b].filter(x=>x!=p)};
+async function pool(items,fn,n=12){const out=[];let i=0;await Promise.all(Array.from({length:n},async()=>{while(i<items.length){const k=i++;out[k]=await fn(items[k])}}));return out}
+(async()=>{const list=[...paths];const ok=await pool(list,exists);const missing=list.filter((_,i)=>!ok[i]);
+ const found=await pool(missing,async p=>{for(const a of alts(p))if(await exists(a))return a;return null});
+ const lost=missing.filter((_,i)=>!found[i]),moved=missing.length-lost.length,r=document.getElementById('r');
+ const sum=`<p>${list.length} files needed. In the right place: <b>${list.length-missing.length}</b>. Found in another place: <b>${moved}</b>. Not found anywhere: <b>${lost.length}</b>.</p>`;
+ if(!missing.length){r.className='box ok';r.innerHTML='<b>All files are in the right place.</b>'+sum}
+ else if(!lost.length){r.className='box warn';r.innerHTML='<b>Everything is uploaded, but not in the expected folders.</b> The website repairs this automatically, so it should display correctly. You can leave it as it is.'+sum}
+ else{r.className='box bad';r.innerHTML='<b>Some files are missing from your GitHub site.</b> Upload them using the steps in the upload guide.'+sum;
+  const g={};lost.forEach(p=>{const k=p.split('/').slice(0,-1).join('/');(g[k]=g[k]||[]).push(p.split('/').pop())});
+  document.getElementById('d').innerHTML='<h3>Missing, by folder</h3>'+Object.entries(g).map(([k,v])=>`<p><code>${k}</code>: ${v.length} missing</p><ul>${v.slice(0,6).map(x=>`<li>${x}</li>`).join('')}${v.length>6?'<li>…</li>':''}</ul>`).join('')}})();
+</script></body></html>

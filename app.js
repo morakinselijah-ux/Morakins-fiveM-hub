@@ -1,3 +1,9 @@
+// self-heal: if a file is not at its expected path, try other common locations (handles flat or misplaced uploads)
+document.addEventListener('error',e=>{const t=e.target;if(!t||!['IMG','VIDEO','SOURCE'].includes(t.tagName))return;
+ const cur=t.getAttribute('src')||'',base=cur.split('/').pop().split('?')[0];if(!base)return;
+ const tried=(t.dataset.tried||'').split('|').filter(Boolean);tried.push(cur);
+ const next=[base,'assets/'+base,'assets/img/'+base,'assets/video/'+base,'assets/logo/'+base,'img/'+base,'images/'+base].find(c=>!tried.includes(c));
+ if(next){t.dataset.tried=tried.join('|');t.setAttribute('src',next);t.tagName=='VIDEO'&&t.load()}},true);
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const C=SITE_CONFIG,esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const cats=C.categories;
