@@ -13,15 +13,15 @@ $('#burger').onclick=e=>{const o=$('#links').classList.toggle('open');e.target.s
 const pad=(arr,m,mk)=>arr.concat(Array.from({length:(m-arr.length%m)%m},mk));
 const phCard=()=>`<div class="ph" aria-hidden="true"><b>+</b><span>More coming soon</span></div>`,phSq=()=>`<div class="ph sq" aria-hidden="true"><b>+</b></div>`;
 // categories / pages
-const META={Vehicles:['vehicles','Vehicles','Custom vehicles with exterior, engine-bay and interior views.'],Chains:['chains','Custom chains','Chain and pendant designs shown in-game, grouped by chain style.'],Peds:['peds','Peds','Custom character models for FiveM.'],Maps:['maps','Maps & scenes','Custom location scenes and props.'],Clothing:['clothing','Clothing & EUP','Custom clothing and uniforms.'],MLOs:['mlos','MLOs','Custom interiors such as apartments and villas.']};
+const META={Liveries:['liveries','Liveries','Emergency and themed vehicle liveries.'],Weapons:['weapons','Weapons','Weapon props, skin packs and an in-game clip.'],Props:['props','Props','Item props such as a bag, cash and phones.'],Logos:['logos','Logos & intros','Server banners and animated intro videos.'],Vehicles:['vehicles','Vehicles','Custom vehicles with exterior, engine-bay and interior views.'],Chains:['chains','Custom chains','Chain and pendant designs shown in-game, grouped by chain style.'],Peds:['peds','Peds','Custom character models for FiveM.'],Maps:['maps','Maps & scenes','Custom location scenes and props.'],Clothing:['clothing','Clothing & EUP','Custom clothing and uniforms.'],MLOs:['mlos','MLOs','Custom interiors such as apartments and villas.']};
 const has=c=>PORTFOLIO.some(p=>p.category==c),live=cats.filter(has);
 const svc=[['FiveM development','Creating and customizing FiveM resources for immersive server experiences.'],...live.map(c=>[META[c][1],META[c][2]])];
 const soon=cats.filter(c=>!has(c)).map(c=>`<a class="glass svc soon" href="#/${META[c][0]}"><h3>${META[c][1]}</h3><p>Page ready. No projects added yet.</p></a>`);
 $('#svc').innerHTML=pad([...svc.map(s=>`<div class="glass svc"><h3>${s[0]}</h3><p>${s[1]}</p></div>`),...soon,`<a class="glass svc soon" href="#/contact"><h3>Something else?</h3><p>Describe your idea in a project request.</p></a>`],4,phCard).join('');
 const card=p=>`<button class="glass card" data-open="${p.id}"><div class="im"><img src="${p.thumbnail}" alt="${esc(p.title)}" loading="lazy"></div><div class="bd"><span class="tag">${p.category}</span><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p><span class="go">View Project</span></div></button>`;
 const byId=id=>PORTFOLIO.find(p=>p.id==id);
-const imgCount=c=>PORTFOLIO.filter(p=>p.category==c).reduce((n,p)=>n+p.gallery.length,0);
-const tile=c=>{const m=META[c],p=PORTFOLIO.find(x=>x.category==c);return p?`<a class="tile" href="#/${m[0]}"><img src="${p.thumbnail}" alt="" loading="lazy"><div><h3>${m[1]}</h3><p>${imgCount(c)} image${imgCount(c)==1?"":"s"}</p></div></a>`:`<a class="tile empty" href="#/${m[0]}"><div><h3>${m[1]}</h3><p>No images added yet</p></div></a>`};
+const imgCount=c=>PORTFOLIO.filter(p=>p.category==c).reduce((n,p)=>n+p.gallery.length+(p.videos||[]).length,0);
+const tile=c=>{const m=META[c],p=PORTFOLIO.find(x=>x.category==c);return p?`<a class="tile" href="#/${m[0]}"><img src="${p.thumbnail}" alt="" loading="lazy"><div><h3>${m[1]}</h3><p>${imgCount(c)} item${imgCount(c)==1?"":"s"}</p></div></a>`:`<a class="tile empty" href="#/${m[0]}"><div><h3>${m[1]}</h3><p>No images added yet</p></div></a>`};
 $('#tiles').innerHTML=pad(cats.map(tile),4,phCard).join('');$('#tiles2').innerHTML=pad(cats.map(tile),4,phCard).join('');
 $('#featGrid').innerHTML=card(byId('veh-red-coupe'))+`<div class="stack">${card(byId('chain-3part'))+card(byId('veh-dark-suv'))}</div>`;
 // all-projects filter (portfolio page)
@@ -29,13 +29,14 @@ let cur='All';const fl=$('#filters');
 fl.innerHTML=['All',...live].map(c=>`<button class="chip" aria-pressed="${c=='All'}">${c}</button>`).join('');
 const draw=()=>{$('#pgrid').innerHTML=pad(PORTFOLIO.filter(p=>cur=='All'||p.category==cur).map(card),4,phCard).join('');typeof fillRows=='function'&&fillRows()};
 fl.onclick=e=>{const b=e.target.closest('.chip');if(!b)return;cur=b.textContent;$$('.chip',fl).forEach(x=>x.setAttribute('aria-pressed',x==b));draw()};draw();
+$('#ddm').innerHTML=cats.map(c=>`<a href="#/${META[c][0]}">${META[c][1]}</a>`).join('');$('#ddb').onclick=e=>{e.stopPropagation();const o=$('.dd').classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)};document.addEventListener('click',()=>{$('.dd').classList.remove('open');$('#ddb').setAttribute('aria-expanded','false')});$('#ddm').onclick=()=>$('#links').classList.remove('open');
 $('#fcats').innerHTML=cats.map(c=>`<a href="#/${META[c][0]}">${META[c][1]}</a>`).join('');
 // category page
 let CL=[];const catPage=key=>{const c=Object.keys(META).find(k=>META[k][0]==key),m=META[c],ps=PORTFOLIO.filter(p=>p.category==c);let h=`<h2>${m[1]}</h2><p class="lead">${m[2]}</p>`;
  if(!ps.length)return h+`<div class="empty-state glass"><h3>No ${m[1].toLowerCase()} images added yet</h3><p>Add entries to PORTFOLIO in data.js and they appear here automatically.</p><p style="margin-top:16px"><a class="btn pri" href="#/contact">Request a project</a></p></div>`;
  h+=`<div class="grid g4">${pad(ps.map(card),4,phCard).join('')}</div>`;
  if(c=='Chains'){const st=['All',...new Set(CHAINS.map(x=>x.style))];h+=`<h3 class="subh">All chain designs</h3><div class="filters" id="cfilters">${st.map(s=>`<button class="chip" aria-pressed="${s=='All'}" data-s="${s}">${s=='Other'?'More styles':s=='All'?'All':s+' chain'} (${s=='All'?CHAINS.length:CHAINS.filter(x=>x.style==s).length})</button>`).join('')}</div><div class="chains" id="cgrid"></div>`}
- else{CL=ps.flatMap(p=>p.gallery.map(g=>({img:g,title:p.title})));h+=`<h3 class="subh">Gallery</h3><div class="gal">${pad(CL.map((g,i)=>`<button data-lb="gal" data-i="${i}" aria-label="${esc(g.title)}"><img src="${g.img}" alt="${esc(g.title)}" loading="lazy"></button>`),4,phSq).join('')}</div>`}
+ else{CL=ps.flatMap(p=>[...p.gallery.map(g=>({img:g,title:p.title})),...(p.videos||[]).map(v=>({img:v.poster,v:v.src,p:v.poster,title:v.title||p.title}))]);h+=`<h3 class="subh">Gallery</h3><div class="gal">${pad(CL.map((g,i)=>`<button data-lb="gal" data-i="${i}" aria-label="${esc(g.title)}"><img src="${g.img}" alt="${esc(g.title)}" loading="lazy">${g.v?'<i>▶</i>':''}</button>`),4,phSq).join('')}</div>`}
  return h};
 const dc=s=>{const l=CHAINS.filter(c=>s=='All'||c.style==s);$('#cgrid').innerHTML=pad(l.map((c,i)=>`<button data-lb="chain" data-i="${i}" aria-label="Chain design ${i+1}"><img src="${c.img}" alt="Custom chain design" loading="lazy"></button>`),6,phSq).join('');$('#cgrid').list=l;fillRows()};
 $('#catbody').addEventListener('click',e=>{const b=e.target.closest('#cfilters .chip');if(!b)return;$$('#cfilters .chip').forEach(x=>x.setAttribute('aria-pressed',x==b));dc(b.dataset.s)});
@@ -55,16 +56,18 @@ addEventListener('hashchange',route);
 // modal
 const M=$('#modal'),MB=$('#mbox');let last;
 const openM=h=>{last=document.activeElement;MB.innerHTML=`<button class="x" aria-label="Close" data-close>✕</button>`+h;M.classList.add('open');document.body.style.overflow='hidden';$('.x',MB).focus()};
-const closeM=()=>{M.classList.remove('open');document.body.style.overflow='';last&&last.focus()};
-const setImg=(i,list)=>{$('#mi').src=list[i];$$('.thumbs button').forEach((b,k)=>b.toggleAttribute('aria-current',k==i))};
-const gal=(list,alt)=>`<div class="mainimg"><img id="mi" src="${list[0]}" alt="${esc(alt)}"></div>`+(list.length>1?`<div class="thumbs">${list.map((g,i)=>`<button data-th="${i}" ${i?'':'aria-current="true"'} aria-label="Image ${i+1}"><img src="${g}" alt=""></button>`).join('')}</div>`:'');
+const closeM=()=>{MB.innerHTML='';M.classList.remove('open');document.body.style.overflow='';last&&last.focus()};
+const isV=x=>typeof x=='object',tsrc=x=>isV(x)?x.p:x;let curAlt='';
+const mainH=x=>isV(x)?`<video src="${x.v}" poster="${x.p}" controls playsinline preload="metadata"></video>`:`<img src="${x}" alt="${esc(curAlt)}">`;
+const setImg=(i,list)=>{$('#mm').innerHTML=mainH(list[i]);$$('.thumbs button').forEach((b,k)=>b.toggleAttribute('aria-current',k==i))};
+const gal=(list,alt)=>(curAlt=alt,`<div class="mainimg" id="mm">${mainH(list[0])}</div>`)+(list.length>1?`<div class="thumbs">${list.map((g,i)=>`<button data-th="${i}" ${i?'':'aria-current="true"'} aria-label="Image ${i+1}"><img src="${tsrc(g)}" alt="">${isV(g)?'<i>▶</i>':''}</button>`).join('')}</div>`:'');
 let curList=[];
-function openProject(id){const p=byId(id);curList=p.gallery;const rel=PORTFOLIO.filter(x=>x.id!=id&&x.category==p.category).slice(0,4).concat(PORTFOLIO.filter(x=>x.category!=p.category)).slice(0,4);
- openM(gal(p.gallery,p.title)+`<div class="mbody"><div><span class="tag">${p.category}${p.subcategory?' · '+p.subcategory:''}</span><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p></div><div><h4>Features</h4><ul>${p.features.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>${p.technologies.length?`<h4>Technologies</h4><ul>${p.technologies.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`:''}<h4>Source</h4><p style="font-size:14px">${esc(p.source)}</p>${p.externalLink?`<p><a class="tag" href="${esc(p.externalLink)}" target="_blank" rel="noopener noreferrer">External link</a></p>`:''}<p style="margin-top:14px"><a class="btn pri" href="#/contact" data-close data-req="${esc(p.title)}">Request something similar</a></p></div></div><div class="rel"><h4 style="margin-bottom:10px">Related projects</h4><div class="grid">${rel.map(card).join('')}</div></div>`)}
+function openProject(id){const p=byId(id);const items=[...p.gallery,...(p.videos||[]).map(v=>({v:v.src,p:v.poster}))];curList=items;const rel=PORTFOLIO.filter(x=>x.id!=id&&x.category==p.category).slice(0,4).concat(PORTFOLIO.filter(x=>x.category!=p.category)).slice(0,4);
+ openM(gal(items,p.title)+`<div class="mbody"><div><span class="tag">${p.category}${p.subcategory?' · '+p.subcategory:''}</span><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p></div><div><h4>Features</h4><ul>${p.features.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>${p.technologies.length?`<h4>Technologies</h4><ul>${p.technologies.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`:''}<h4>Source</h4><p style="font-size:14px">${esc(p.source)}</p>${p.externalLink?`<p><a class="tag" href="${esc(p.externalLink)}" target="_blank" rel="noopener noreferrer">External link</a></p>`:''}<p style="margin-top:14px"><a class="btn pri" href="#/contact" data-close data-req="${esc(p.title)}">Request something similar</a></p></div></div><div class="rel"><h4 style="margin-bottom:10px">Related projects</h4><div class="grid">${rel.map(card).join('')}</div></div>`)}
 function openLB(list,i,alt){curList=list;openM(gal(list,alt));setImg(i,list)}
 document.addEventListener('click',e=>{const t=e.target;
  const o=t.closest('[data-open]');if(o){if(M.classList.contains('open'))MB.parentNode.scrollTop=0;return openProject(o.dataset.open)}
- const l=t.closest('[data-lb]');if(l){const i=+l.dataset.i;if(l.dataset.lb=='chain')return openLB($('#cgrid').list.map(c=>c.img),i,'Custom chain design');return openLB(CL.map(g=>g.img),i,CL[i].title)}
+ const l=t.closest('[data-lb]');if(l){const i=+l.dataset.i;if(l.dataset.lb=='chain')return openLB($('#cgrid').list.map(c=>c.img),i,'Custom chain design');return openLB(CL.map(g=>g.v?{v:g.v,p:g.p}:g.img),i,CL[i].title)}
  const th=t.closest('[data-th]');if(th)return setImg(+th.dataset.th,curList);
  const c=t.closest('[data-close]');if(c||t==M){closeM();if(c&&c.dataset.req){location.hash='#/contact';$('#m').value=`I'd like something similar to: ${c.dataset.req}\n`}}
  const q=t.closest('[data-q]');if(q)ask(q.dataset.q)});
@@ -75,20 +78,26 @@ const say=(h,u)=>{const d=document.createElement('div');d.className='m '+(u?'u':
 const mini=ps=>`<div class="mini">${ps.map(p=>`<button data-open="${p.id}"><img src="${p.thumbnail}" alt=""><small>${esc(p.title)}</small></button>`).join('')}</div>`;
 const NONE=w=>`This website has no verified ${w} to show. For anything not in the portfolio, ask in our Discord or use the <a href="#/contact" style="color:var(--gold)">request form</a>.`;
 const of=c=>PORTFOLIO.filter(p=>p.category==c);
+const link=(h,t)=>`<a href="${h}" style="color:var(--gold)">${t}</a>`;
 const R=[
- [/chain|jewel|pendant/,()=>`We have ${CHAINS.length} chain preview images across ${of('Chains').length} projects: 3-part, single and double chains with pendants, plus more styles. <a href="#/chains" style="color:var(--gold)">Open the chains section</a>.`+mini(of('Chains'))],
- [/vehicle|car|suv|truck|coupe|sedan|jeep|livery|liveries/,()=>`Here are the ${of('Vehicles').length} vehicle projects in the portfolio.`+mini(of('Vehicles'))],
- [/\bped\b|peds|character/,()=>`Here is the ped in the portfolio.`+mini(of('Peds'))],
- [/mlo|map|interior|scene|location|apartment|villa/,()=>of('Maps').length?`We don't have any verified MLO projects on this site. The closest work is a scene (see the <a href="#/maps" style="color:var(--gold)">Maps page</a>):`+mini(of('Maps')):NONE('maps or MLOs')],
- [/eup|cloth|outfit|uniform/,()=>NONE('EUP or clothing projects')],
+ [/chain|jewel|pendant/,()=>`We have ${CHAINS.length} chain preview images across ${of('Chains').length} projects: 3-part, single and double chains with pendants, plus more styles. ${link('#/chains','Open the chains page')}.`+mini(of('Chains'))],
+ [/liveri|police|sheriff|paramedic|ambulance|emergency/,()=>`Here are the ${of('Liveries').length} livery projects, including police, sheriff and paramedic designs. ${link('#/liveries','Open the liveries page')}.`+mini(of('Liveries'))],
+ [/bike|motorcycle|truck|atv|vehicle|car\b|cars|suv|coupe|sedan|jeep/,()=>`Here are the ${of('Vehicles').length} vehicle projects: cars, SUVs, off-road, motorcycles, trucks and an ATV. ${link('#/vehicles','Open the vehicles page')}.`+mini(of('Vehicles'))],
+ [/weapon|gun|rifle|skin|firearm/,()=>`Here are the weapon projects: props, skin packs and an in-game clip. ${link('#/weapons','Open the weapons page')}.`+mini(of('Weapons'))],
+ [/prop|item|phone|bag|money|cash/,()=>`Here are the item props. ${link('#/props','Open the props page')}.`+mini(of('Props'))],
+ [/logo|banner|intro|animation|video/,()=>`Here are the logos, banners and intro videos. ${link('#/logos','Open the logos & intros page')}.`+mini(of('Logos'))],
+ [/eup|cloth|outfit|uniform/,()=>`Here are the clothing and uniform projects. ${link('#/clothing','Open the clothing page')}. Only these have been added so far, and I can't confirm other EUP.`+mini(of('Clothing'))],
+ [/\bped\b|peds|character|toddler|baby/,()=>`Here are the ped projects. ${link('#/peds','Open the peds page')}.`+mini(of('Peds'))],
+ [/mlo|apartment|villa|interior/,()=>NONE('MLO projects')],
+ [/map|scene|location/,()=>`We don't have any verified MLO projects on this site. The closest work is scenes (${link('#/maps','Maps page')}):`+mini(of('Maps'))],
  [/script|hud|ui\b|framework/,()=>NONE('scripts or HUDs')],
  [/service|offer|do you (do|make)|what can/,()=>`Based on the portfolio: ${svc.map(s=>s[0]).join(', ')}. Anything else isn't verified on this site.`],
- [/request|custom project|commission|order|hire|quote/,()=>`Use the <a href="#/contact" style="color:var(--gold)">Request a Project form</a> and describe what you need. You can also reach us on Discord.`],
+ [/request|custom project|commission|order|hire|quote/,()=>`Use the ${link('#/contact','Request a Project form')} and describe what you need. You can also reach us on Discord.`],
  [/discord|join|community|server/,()=>dOK?`Join the community here: <a href="${esc(C.discordInvite)}" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Morakins FiveM Hub Discord</a>.`:`The Discord invite hasn't been added to this site yet. Check back soon.`],
- [/project|work|portfolio|show|everything|all/,()=>`Here is the full portfolio: ${PORTFOLIO.length} projects across ${cats.join(', ')}.`+mini(PORTFOLIO)]
+ [/project|work|portfolio|show|everything|all/,()=>`Here is a sample from the portfolio: ${PORTFOLIO.length} projects across ${live.join(', ')}. ${link('#/portfolio','Open the full portfolio')}.`+mini(PORTFOLIO.slice(0,8))]
 ];
 function ask(t){say(esc(t),1);const l=t.toLowerCase();const r=R.find(x=>x[0].test(l));setTimeout(()=>say(r?r[1]():`This website has no verified information about that. I can show projects, services, chains, vehicles, or how to request work or join the server.`),250)}
-$('#quick').innerHTML=['Show me your FiveM projects','What services do you offer?','Show me your custom chains','Show me your vehicles','Show me your MLOs & maps','Show me your EUP & clothing','Show me your scripts & HUDs','How can I request a custom project?','I want to join the server'].map(q=>`<button data-q="${q}">${q}</button>`).join('');
+$('#quick').innerHTML=['Show me your FiveM projects','What services do you offer?','Show me your custom chains','Show me your vehicles','Show me your liveries','Show me your weapons & props','Show me your MLOs & maps','Show me your EUP & clothing','Show me your scripts & HUDs','How can I request a custom project?','I want to join the server'].map(q=>`<button data-q="${q}">${q}</button>`).join('');
 say('Hi! Pick a question on the left or type your own. Answers come only from the projects on this site.');
 $('#cf').onsubmit=e=>{e.preventDefault();const v=$('#ci').value.trim();if(v){ask(v);$('#ci').value=''}};
 // request form (frontend-ready; posts only if C.formEndpoint is set)

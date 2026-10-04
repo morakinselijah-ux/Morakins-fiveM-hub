@@ -1,30 +1,28 @@
 # Morakins FiveM Hub
 
-Portfolio website for Morakins FiveM Hub. Plain HTML, CSS and JavaScript. No build step and no dependencies.
+Portfolio website for Morakins FiveM Hub. Plain HTML, CSS and JavaScript. No build step.
 
-Live site: `https://morakinselijah-ux.github.io/Morakins-fiveM-hub/`
+Live site: https://morakinselijah-ux.github.io/Morakins-fiveM-hub/
+
+## Pages
+Home, Portfolio, and one page per category: Vehicles, Liveries, Chains, Peds, Clothing, Weapons, Props, Maps, Logos & intros and MLOs (empty until MLO images are added). Plus About and Contact.
 
 ## Structure
-
-| File | Purpose |
+| Path | Purpose |
 | --- | --- |
-| `index.html` | Page shell (all pages load here, routed by `#/vehicles`, `#/chains`, ...) |
-| `config.js` | Brand name, logo, Discord invite, form endpoint, social links |
-| `data.js` | Portfolio projects and chain images |
-| `app.js` | Routing, filters, modals, assistant, form |
+| `index.html` | Page shell (pages are routed by `#/vehicles`, `#/chains`, ...) |
+| `config.js` | Brand, logo, Discord invite, form endpoint, categories |
+| `data.js` | All portfolio projects and chain images |
+| `app.js` | Routing, filters, modals, video player, assistant, form |
 | `styles.css` | Styling |
-| `assets/` | Logo and optimized images |
+| `assets/logo` | Morakins logo |
+| `assets/img/<category>` | Optimized images, one folder per category |
+| `assets/video` | Compressed MP4 videos |
 
 ## Add a project
-
-1. Put a `.webp` image in `assets/img/`.
-2. Add an entry to `PORTFOLIO` in `data.js` with `category` set to `Vehicles`, `Chains`, `Peds`, `Maps`, `Clothing` or `MLOs`.
+1. Put a `.webp` image in `assets/img/<category>/`.
+2. Add an entry to `PORTFOLIO` in `data.js` (copy an existing one). Set `category` to one of: Vehicles, Liveries, Chains, Peds, Clothing, Weapons, Props, Maps, Logos, MLOs.
 3. Commit and push. The site updates in about a minute.
 
-## Connect the request form
-
-Set `formEndpoint` in `config.js` to a POST URL (for example a Formspree or Getform endpoint). Without it, the form copies the request to the visitor's clipboard.
-
 ## Content notes
-
-Image ownership for supplied portfolio material is not verified. Do not present other creators' work as Morakins work without permission.
+Ownership of the supplied portfolio material is not verified. Some previews show other creators' names. See the Source field on each project.
