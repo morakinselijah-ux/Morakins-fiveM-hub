@@ -11,7 +11,7 @@ Home, Portfolio, and one page per category: Vehicles, Liveries, Chains, Peds, Cl
 | Path | Purpose |
 | --- | --- |
 | `index.html` | Page shell (pages are routed by `#/vehicles`, `#/chains`, ...) |
-| `config.js` | Brand, logo, Discord invite, form endpoint, categories |
+| `config.js` | Brand, logo, Discord invite, contact email, form endpoint, categories |
 | `data.js` | All portfolio projects and chain images |
 | `app.js` | Routing, filters, modals, video player, assistant, form |
 | `styles.css` | Styling |

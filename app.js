@@ -19,7 +19,7 @@ $('#burger').onclick=e=>{const o=$('#links').classList.toggle('open');e.target.s
 const pad=(arr,m,mk)=>arr.concat(Array.from({length:(m-arr.length%m)%m},mk));
 const phCard=()=>`<div class="ph" aria-hidden="true"><b>+</b><span>More coming soon</span></div>`,phSq=()=>`<div class="ph sq" aria-hidden="true"><b>+</b></div>`;
 // categories / pages
-const META={Liveries:['liveries','Liveries','Emergency and themed vehicle liveries.'],Weapons:['weapons','Weapons','Weapon props, skin packs and an in-game clip.'],Props:['props','Props','Item props such as a bag, cash and phones.'],Logos:['logos','Logos & intros','Server banners and animated intro videos.'],Vehicles:['vehicles','Vehicles','Custom vehicles with exterior, engine-bay and interior views.'],Chains:['chains','Custom chains','Chain and pendant designs shown in-game, grouped by chain style.'],Peds:['peds','Peds','Custom character models for FiveM.'],Maps:['maps','Maps & scenes','Custom location scenes and props.'],Clothing:['clothing','Clothing & EUP','Custom clothing and uniforms.'],MLOs:['mlos','MLOs','Custom interiors such as apartments and villas.']};
+const META={Liveries:['liveries','Liveries','Emergency, themed and wrap liveries.'],Weapons:['weapons','Weapons','Weapon props, skin packs and an in-game clip.'],Props:['props','Props','Item props such as a bag, cash and phones.'],Logos:['logos','Logos & intros','Server banners and animated intro videos.'],Vehicles:['vehicles','Vehicles','Custom vehicles with exterior, engine-bay and interior views.'],Chains:['chains','Custom chains','Chain and pendant designs shown in-game, grouped by chain style.'],Peds:['peds','Peds','Custom character models for FiveM.'],Maps:['maps','Maps & scenes','Custom map views and location scenes.'],Clothing:['clothing','Clothing & EUP','Custom clothing and uniforms.'],MLOs:['mlos','MLOs','Custom interiors such as apartments and villas.']};
 const has=c=>PORTFOLIO.some(p=>p.category==c),live=cats.filter(has);
 const svc=[['FiveM development','Creating and customizing FiveM resources for immersive server experiences.'],...live.map(c=>[META[c][1],META[c][2]])];
 const soon=cats.filter(c=>!has(c)).map(c=>`<a class="glass svc soon" href="#/${META[c][0]}"><h3>${META[c][1]}</h3><p>Page ready. No projects added yet.</p></a>`);
@@ -53,8 +53,8 @@ function fillRows(){(PH_SEL||[]).forEach(s=>$$(s).forEach(g=>{$$('.ph',g).forEac
  for(let i=0;i<miss;i++){const d=document.createElement('a');d.className='ph';d.href='#/contact';d.setAttribute('aria-label','Request a project');d.innerHTML='<span>More coming soon</span>';g.append(d)}}))}
 let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(fillRows,120)});
 // router
-const titles={portfolio:'Portfolio',about:'About',contact:'Contact'};
-function route(){const k=(location.hash.replace(/^#\/?/,'')||'home').split('/')[0];const isCat=Object.values(META).some(m=>m[0]==k);const pg=isCat?'cat':(['home','portfolio','about','contact'].includes(k)?k:'home');
+const titles={portfolio:'Portfolio',about:'About',contact:'Contact',buy:'How to Buy'};
+function route(){const k=(location.hash.replace(/^#\/?/,'')||'home').split('/')[0];const isCat=Object.values(META).some(m=>m[0]==k);const pg=isCat?'cat':(['home','portfolio','about','contact','buy'].includes(k)?k:'home');
  $$('.page').forEach(p=>p.classList.toggle('on',p.dataset.page==pg));if(isCat){$('#catbody').innerHTML=catPage(k);if($('#cgrid'))dc('All')}
  $$('#links a').forEach(a=>a.toggleAttribute('aria-current',a.getAttribute('href')=='#/'+(k=='home'?'':k)));
  const nm=isCat?Object.values(META).find(m=>m[0]==k)[1]:titles[k];document.title=(nm?nm+' | ':'')+C.brandName;window.scrollTo(0,0);fillRows()}
@@ -82,33 +82,40 @@ document.addEventListener('keydown',e=>{if(e.key=='Escape'&&M.classList.contains
 const log=$('#log');
 const say=(h,u)=>{const d=document.createElement('div');d.className='m '+(u?'u':'b');d.innerHTML=h;log.append(d);log.scrollTop=log.scrollHeight};
 const mini=ps=>`<div class="mini">${ps.map(p=>`<button data-open="${p.id}"><img src="${p.thumbnail}" alt=""><small>${esc(p.title)}</small></button>`).join('')}</div>`;
-const NONE=w=>`This website has no verified ${w} to show. For anything not in the portfolio, ask in our Discord or use the <a href="#/contact" style="color:var(--gold)">request form</a>.`;
+const MAIL=C.contactEmail,mail=(q,s)=>`mailto:${MAIL}?subject=${encodeURIComponent(s||'Question from the website')}&body=${encodeURIComponent(q||'')}`;
+const mlink=q=>`<a href="${mail(q)}" style="color:var(--gold)">${MAIL}</a>`;
+$$('[data-email]').forEach(x=>{x.href=mail('');x.textContent=MAIL});
+$('#pays').innerHTML=C.payments.map(p=>`<div class="glass pay">${esc(p)}</div>`).join('');
+if(C.buyMeCoffee)$('#bmc').innerHTML=`<div class="glass bmc"><div><h3 style="font-size:22px">Buy Me a Coffee</h3><p>You can also pay through Buy Me a Coffee.</p></div><a class="btn" href="${esc(C.buyMeCoffee)}" target="_blank" rel="noopener noreferrer">Open Buy Me a Coffee</a></div>`;
+const NONE=(w,q)=>`This website has no verified ${w} to show. Please email ${mlink(q)} and we'll answer you directly. You can also ask in our Discord.`;
 const of=c=>PORTFOLIO.filter(p=>p.category==c);
 const link=(h,t)=>`<a href="${h}" style="color:var(--gold)">${t}</a>`;
 const R=[
+ [/\bbuy|purchase|payment|\bpay\b|paying|ticket|apple pay|skrill|btc|bitcoin|crypto|revolut|gift card|coffee|order/,()=>`To buy, join our Discord and create a ticket in the Ticket channel. Payment methods: ${C.payments.join(', ')}${C.buyMeCoffee?', or Buy Me a Coffee':''}. Prices are discussed in your ticket. ${link('#/buy','Open the How to Buy page')}.`],
+ [/price|cost|how much|budget|quote|timeline|how long|turnaround|refund|deliver/,t=>`This website has no verified pricing or timelines. Please email ${mlink(t)} with your idea and we'll reply directly, or use the ${link('#/contact','request form')}.`],
  [/chain|jewel|pendant/,()=>`We have ${CHAINS.length} chain preview images across ${of('Chains').length} projects: 3-part, single and double chains with pendants, plus more styles. ${link('#/chains','Open the chains page')}.`+mini(of('Chains'))],
  [/liveri|police|sheriff|paramedic|ambulance|emergency/,()=>`Here are the ${of('Liveries').length} livery projects, including police, sheriff and paramedic designs. ${link('#/liveries','Open the liveries page')}.`+mini(of('Liveries'))],
- [/bike|motorcycle|truck|atv|vehicle|car\b|cars|suv|coupe|sedan|jeep/,()=>`Here are the ${of('Vehicles').length} vehicle projects: cars, SUVs, off-road, motorcycles, trucks and an ATV. ${link('#/vehicles','Open the vehicles page')}.`+mini(of('Vehicles'))],
+ [/bike|motorcycle|truck|pickup|6x6|atv|vehicle|car\b|cars|suv|coupe|sedan|jeep/,()=>`Here are the ${of('Vehicles').length} vehicle projects: cars, SUVs, off-road, motorcycles, trucks and an ATV. ${link('#/vehicles','Open the vehicles page')}.`+mini(of('Vehicles'))],
  [/weapon|gun|rifle|skin|firearm/,()=>`Here are the weapon projects: props, skin packs and an in-game clip. ${link('#/weapons','Open the weapons page')}.`+mini(of('Weapons'))],
  [/prop|item|phone|bag|money|cash/,()=>`Here are the item props. ${link('#/props','Open the props page')}.`+mini(of('Props'))],
  [/logo|banner|intro|animation|video/,()=>`Here are the logos, banners and intro videos. ${link('#/logos','Open the logos & intros page')}.`+mini(of('Logos'))],
- [/eup|cloth|outfit|uniform/,()=>`Here are the clothing and uniform projects. ${link('#/clothing','Open the clothing page')}. Only these have been added so far, and I can't confirm other EUP.`+mini(of('Clothing'))],
+ [/eup|cloth|outfit|uniform|mask|shorts|brazil/,()=>`Here are the clothing and uniform projects. ${link('#/clothing','Open the clothing page')}. Only these have been added so far, and I can't confirm other EUP.`+mini(of('Clothing'))],
  [/\bped\b|peds|character|toddler|baby/,()=>`Here are the ped projects. ${link('#/peds','Open the peds page')}.`+mini(of('Peds'))],
- [/mlo|apartment|villa|interior/,()=>NONE('MLO projects')],
- [/map|scene|location/,()=>`We don't have any verified MLO projects on this site. The closest work is scenes (${link('#/maps','Maps page')}):`+mini(of('Maps'))],
- [/script|hud|ui\b|framework/,()=>NONE('scripts or HUDs')],
+ [/mlo|apartment|villa|interior|office|loft|mansion|house/,t=>of('MLOs').length?`Here are the ${of('MLOs').length} MLO and interior projects${/map/i.test(t)?' and the map projects':''}. ${link('#/mlos','Open the MLOs page')}.`+mini(of('MLOs').concat(/map/i.test(t)?of('Maps'):[])):NONE('MLO projects',t)],
+ [/map|scene|location/,()=>`Here are the ${of('Maps').length} map projects: aerial views, an overview map and scenes. ${link('#/maps','Open the maps page')}.`+mini(of('Maps'))],
+ [/script|\bhud\b|\bui\b|framework/,t=>NONE('scripts or HUDs',t)],
  [/service|offer|do you (do|make)|what can/,()=>`Based on the portfolio: ${svc.map(s=>s[0]).join(', ')}. Anything else isn't verified on this site.`],
  [/request|custom project|commission|order|hire|quote/,()=>`Use the ${link('#/contact','Request a Project form')} and describe what you need. You can also reach us on Discord.`],
  [/discord|join|community|server/,()=>dOK?`Join the community here: <a href="${esc(C.discordInvite)}" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Morakins FiveM Hub Discord</a>.`:`The Discord invite hasn't been added to this site yet. Check back soon.`],
- [/project|work|portfolio|show|everything|all/,()=>`Here is a sample from the portfolio: ${PORTFOLIO.length} projects across ${live.join(', ')}. ${link('#/portfolio','Open the full portfolio')}.`+mini(PORTFOLIO.slice(0,8))]
+ [/\bprojects?\b|\bportfolio\b|\bwork\b|everything|show me (all|everything)/,()=>`Here is a sample from the portfolio: ${PORTFOLIO.length} projects across ${live.join(', ')}. ${link('#/portfolio','Open the full portfolio')}.`+mini(PORTFOLIO.slice(0,8))]
 ];
-function ask(t){say(esc(t),1);const l=t.toLowerCase();const r=R.find(x=>x[0].test(l));setTimeout(()=>say(r?r[1]():`This website has no verified information about that. I can show projects, services, chains, vehicles, or how to request work or join the server.`),250)}
-$('#quick').innerHTML=['Show me your FiveM projects','What services do you offer?','Show me your custom chains','Show me your vehicles','Show me your liveries','Show me your weapons & props','Show me your MLOs & maps','Show me your EUP & clothing','Show me your scripts & HUDs','How can I request a custom project?','I want to join the server'].map(q=>`<button data-q="${q}">${q}</button>`).join('');
+function ask(t){say(esc(t),1);const l=t.toLowerCase();const r=R.find(x=>x[0].test(l));setTimeout(()=>say(r?r[1](t):`I can't answer that from the information on this website. Please email your question to ${mlink(t)} and we'll get back to you. Meanwhile I can show projects, services, chains, vehicles, liveries, or how to request work or join the server.`),250)}
+$('#quick').innerHTML=['Show me your FiveM projects','What services do you offer?','Show me your custom chains','Show me your vehicles','Show me your liveries','Show me your weapons & props','Show me your MLOs & maps','Show me your EUP & clothing','Show me your scripts & HUDs','How can I request a custom project?','How do I buy something?','I want to join the server'].map(q=>`<button data-q="${q}">${q}</button>`).join('');
 say('Hi! Pick a question on the left or type your own. Answers come only from the projects on this site.');
 $('#cf').onsubmit=e=>{e.preventDefault();const v=$('#ci').value.trim();if(v){ask(v);$('#ci').value=''}};
 // request form (frontend-ready; posts only if C.formEndpoint is set)
 const ts=$('#t');ts.innerHTML=[...live.map(c=>META[c][1]),'Custom script','MLO / map','HUD / UI','EUP / clothing','Other'].map(o=>`<option>${o}</option>`).join('');
 $('#rf').onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),s=$('#fs');
- if(!C.formEndpoint){s.textContent='Form is not connected to a backend yet. Please send this request on Discord.';navigator.clipboard&&navigator.clipboard.writeText(Object.entries(d).map(([k,v])=>k+': '+v).join('\n')).then(()=>toast('Request copied to your clipboard'),()=>{});return}
+ if(!C.formEndpoint){const body=Object.entries(d).map(([k,v])=>k+': '+v).join('\n');s.textContent='Opening your email app. If nothing opens, email '+MAIL+' directly.';const l=document.createElement('a');l.href=mail(body,'Project request: '+d.type);document.body.append(l);l.click();l.remove();navigator.clipboard&&navigator.clipboard.writeText(body).catch(()=>{});return}
  try{const r=await fetch(C.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!r.ok)throw 0;s.textContent='Request sent.';e.target.reset()}catch{s.textContent='Could not send the request. Try again or use Discord.'}};
 route();

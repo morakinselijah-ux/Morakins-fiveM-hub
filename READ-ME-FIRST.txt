@@ -1,28 +1,21 @@
 MORAKINS FIVEM HUB - UPLOAD PACK
 
-Why your images did not show: when files are dragged out of a folder, GitHub puts
-them in the top level of the repo. The website looks for them inside folders
-(assets/img/vehicles, assets/logo ...). This pack keeps the folders together.
+Unzip this pack first, then work from the unzipped folders.
 
-DO THIS, IN ORDER (unzip this pack first, then work from the unzipped folders):
-
-STEP 1  Open STEP-1-upload-these-7-files. Select the 7 files inside and drag them
+STEP 1  Open STEP-1-upload-these-8-files. Select the 8 files inside and drag them
         into GitHub (Add file > Upload files). Commit changes.
 
 STEP 2  Open STEP-2-drag-the-assets-folder. Drag the folder named "assets" itself
-        (do not open it) into GitHub (Add file > Upload files).
-        Wait until the upload finishes (71 files). Commit changes.
+        (do not open it) into GitHub. Wait for it to finish (95 files). Commit changes.
 
 STEP 3  Open STEP-3-drag-the-assets-folder. Drag the folder named "assets" itself
-        into GitHub. (89 files). Commit changes.
-        GitHub merges it with the assets folder from Step 2.
+        (do not open it) into GitHub. Wait for it to finish (91 files). Commit changes.
 
 THEN    Settings > Pages > Deploy from a branch > main > / (root) > Save.
-        Wait 2 minutes, then open:
+        After 2 minutes open:
           https://morakinselijah-ux.github.io/Morakins-fiveM-hub/check.html
-        It tells you in green, yellow or red whether everything is uploaded.
+        Green = all good. Yellow = fine, the site repairs it. Red = files missing.
 
-Rules that prevent the problem:
+Rules:
   - Always drag the FOLDER called "assets", never the files inside it.
-  - Do not unzip the pack into another folder and upload that outer folder.
-  - If you already uploaded images loose in the repo, leave them. The site finds them.
+  - Loose images already in your repo can stay. The site finds them.

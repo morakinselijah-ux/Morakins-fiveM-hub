@@ -850,6 +850,241 @@ const PORTFOLIO=[
   "externalLink": ""
  },
  {
+  "id": "veh-bull-pickup",
+  "title": "Custom Lifted Pickup with Horns",
+  "category": "Vehicles",
+  "subcategory": "Trucks",
+  "description": "Tan lifted pickup with bull horns on the hood, a roof light bar, a spare tire and red grille graphics, shown from the front, rear and above.",
+  "thumbnail": "assets/img/vehicles/veh-bull-pickup-1.webp",
+  "gallery": [
+   "assets/img/vehicles/veh-bull-pickup-1.webp",
+   "assets/img/vehicles/veh-bull-pickup-2.webp",
+   "assets/img/vehicles/veh-bull-pickup-3.webp",
+   "assets/img/vehicles/veh-bull-pickup-4.webp"
+  ],
+  "videos": [],
+  "features": [
+   "4 preview images"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "veh-cyan-6x6",
+  "title": "Custom Turquoise 6x6 Pickup",
+  "category": "Vehicles",
+  "subcategory": "Trucks",
+  "description": "Turquoise six-wheel pickup with gold wheels, shown in a showroom.",
+  "thumbnail": "assets/img/vehicles/veh-cyan-6x6-1.webp",
+  "gallery": [
+   "assets/img/vehicles/veh-cyan-6x6-1.webp"
+  ],
+  "videos": [],
+  "features": [
+   "1 preview images"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "veh-white-suv",
+  "title": "Custom White Off-Road SUV",
+  "category": "Vehicles",
+  "subcategory": "SUVs",
+  "description": "White boxy SUV with a black body kit, shown in a dark patterned showroom.",
+  "thumbnail": "assets/img/vehicles/veh-white-suv-1.webp",
+  "gallery": [
+   "assets/img/vehicles/veh-white-suv-1.webp"
+  ],
+  "videos": [],
+  "features": [
+   "1 preview images"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "liv-showroom-wraps",
+  "title": "Showroom Wrap Liveries",
+  "category": "Liveries",
+  "subcategory": "Wraps",
+  "description": "Two hatchbacks with custom wraps: a black and white camouflage pattern, and a red and white splatter design.",
+  "thumbnail": "assets/img/liveries/liv-showroom-wraps-1.webp",
+  "gallery": [
+   "assets/img/liveries/liv-showroom-wraps-1.webp",
+   "assets/img/liveries/liv-showroom-wraps-2.webp",
+   "assets/img/liveries/liv-showroom-wraps-3.webp"
+  ],
+  "videos": [],
+  "features": [
+   "3 preview images",
+   "Custom paint wraps"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "cloth-masks",
+  "title": "Custom Hockey Masks",
+  "category": "Clothing",
+  "subcategory": "Masks",
+  "description": "Two views of a distressed hockey-style mask with graffiti-like markings.",
+  "thumbnail": "assets/img/clothing/cloth-masks-1.webp",
+  "gallery": [
+   "assets/img/clothing/cloth-masks-1.webp",
+   "assets/img/clothing/cloth-masks-2.webp"
+  ],
+  "videos": [],
+  "features": [
+   "2 preview images",
+   "Mask models"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "cloth-brazil",
+  "title": "Brazil-Themed Shorts and Top",
+  "category": "Clothing",
+  "subcategory": "Outfits",
+  "description": "Green and yellow shorts and a crop top with Brazil lettering.",
+  "thumbnail": "assets/img/clothing/cloth-brazil-1.webp",
+  "gallery": [
+   "assets/img/clothing/cloth-brazil-1.webp",
+   "assets/img/clothing/cloth-brazil-2.webp"
+  ],
+  "videos": [],
+  "features": [
+   "2 preview images",
+   "Matching set"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "map-aerial",
+  "title": "Custom Map Aerial Views",
+  "category": "Maps",
+  "subcategory": "Aerial",
+  "description": "Aerial views of custom map areas: a neighbourhood, a roundabout park beside a bridge, an island with a pier, and a city park.",
+  "thumbnail": "assets/img/maps/map-aerial-1.webp",
+  "gallery": [
+   "assets/img/maps/map-aerial-1.webp",
+   "assets/img/maps/map-aerial-2.webp",
+   "assets/img/maps/map-aerial-3.webp",
+   "assets/img/maps/map-aerial-4.webp"
+  ],
+  "videos": [],
+  "features": [
+   "4 preview images"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "map-overview",
+  "title": "Map Overview",
+  "category": "Maps",
+  "subcategory": "Overview",
+  "description": "Overview map of a coastal city area with the label \"Detroit\".",
+  "thumbnail": "assets/img/maps/map-overview-1.webp",
+  "gallery": [
+   "assets/img/maps/map-overview-1.webp"
+  ],
+  "videos": [],
+  "features": [
+   "1 preview images"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "mlo-dynasty8",
+  "title": "Dynasty 8 Office Building",
+  "category": "MLOs",
+  "subcategory": "Office",
+  "description": "Glass office building with a Dynasty 8 sign, shown from the street, the entrance and the steps.",
+  "thumbnail": "assets/img/mlos/mlo-dynasty8-1.webp",
+  "gallery": [
+   "assets/img/mlos/mlo-dynasty8-1.webp",
+   "assets/img/mlos/mlo-dynasty8-2.webp",
+   "assets/img/mlos/mlo-dynasty8-3.webp"
+  ],
+  "videos": [],
+  "features": [
+   "3 preview images",
+   "Exterior and entrance views"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "mlo-loft",
+  "title": "Modern Loft Interior",
+  "category": "MLOs",
+  "subcategory": "Apartment",
+  "description": "Open-plan modern apartment with wood floors, a kitchen, a living area and large windows.",
+  "thumbnail": "assets/img/mlos/mlo-loft-1.webp",
+  "gallery": [
+   "assets/img/mlos/mlo-loft-1.webp",
+   "assets/img/mlos/mlo-loft-2.webp",
+   "assets/img/mlos/mlo-loft-3.webp"
+  ],
+  "videos": [],
+  "features": [
+   "3 preview images",
+   "Hallway, kitchen and living room"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "mlo-villa",
+  "title": "Villa Garden and Pool",
+  "category": "MLOs",
+  "subcategory": "Villa",
+  "description": "Villa exterior with a lawn, a pool and a stone path.",
+  "thumbnail": "assets/img/mlos/mlo-villa-1.webp",
+  "gallery": [
+   "assets/img/mlos/mlo-villa-1.webp"
+  ],
+  "videos": [],
+  "features": [
+   "1 preview images"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
+  "id": "mlo-grand-hall",
+  "title": "Grand Hall Interior",
+  "category": "MLOs",
+  "subcategory": "Interior",
+  "description": "Large entrance hall with twin staircases, arches and tiled floors.",
+  "thumbnail": "assets/img/mlos/mlo-grand-hall-1.webp",
+  "gallery": [
+   "assets/img/mlos/mlo-grand-hall-1.webp"
+  ],
+  "videos": [],
+  "features": [
+   "1 preview images"
+  ],
+  "technologies": [],
+  "source": "Supplied portfolio material. Original author and ownership are not verified.",
+  "externalLink": ""
+ },
+ {
   "id": "logo-intros",
   "title": "Server Intro Animations",
   "category": "Logos",
