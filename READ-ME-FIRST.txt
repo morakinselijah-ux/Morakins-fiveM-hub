@@ -2,7 +2,7 @@ MORAKINS FIVEM HUB - UPLOAD PACK
 
 Unzip this pack first, then work from the unzipped folders.
 
-STEP 1  Open STEP-1-upload-these-8-files. Select the 8 files inside and drag them
+STEP 1  Open STEP-1-upload-these-10-files. Select the 10 files inside and drag them
         into GitHub (Add file > Upload files). Commit changes.
 
 STEP 2  Open STEP-2-drag-the-assets-folder. Drag the folder named "assets" itself
